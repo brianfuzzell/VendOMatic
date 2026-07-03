@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-03 -->
-<!-- Last change: Folded xUnit backend test project setup into Step 2 -->
+<!-- Last change: Marked Step 2 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -13,7 +13,7 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** the app is running, **When** a request hits a route defined by an `[ApiController]`, **Then** it responds successfully, confirming controllers are wired up correctly.
 
-- [ ] **Step 2: Model inventory with EF Core + SQLite**
+- [x] **Step 2: Model inventory with EF Core + SQLite**
   Add a `Beverage` entity (`Id`, `Name`, `Quantity`), a `VendingDbContext`, and a SQLite connection string in `appsettings.json`. Register the context in DI. Create the initial migration and seed 3 beverages (Cherry Coke, LaCroix, Sprite) at quantity 5 each. Set up an xUnit test project and write a backend unit test that verifies the seeded data (3 beverages, quantity 5 each) via the `DbContext`.
 
   **Acceptance Criteria:**
