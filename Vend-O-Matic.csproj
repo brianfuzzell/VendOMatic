@@ -17,4 +17,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Vend-O-Matic.Tests\**" />
+    <Content Remove="Vend-O-Matic.Tests\**" />
+    <EmbeddedResource Remove="Vend-O-Matic.Tests\**" />
+    <None Remove="Vend-O-Matic.Tests\**" />
+  </ItemGroup>
+
 </Project>
