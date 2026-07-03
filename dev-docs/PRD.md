@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-03 -->
-<!-- Last change: Initial PRD creation -->
+<!-- Last change: Added xUnit backend unit testing to scope (Step 2) -->
 
 # Vend-O-Matic - Product Requirements Document
 
@@ -34,7 +34,7 @@ From the assignment spec:
 - **Backend:** ASP.NET Core Web API, C#, .NET 10, **controller-based routing** (replacing the default minimal-API template currently in `Program.cs`), matching the Book 4 pattern.
 - **Data:** EF Core with **SQLite** (file-based), one `DbContext`, a `Beverage` entity (id, name, quantity) and machine coin state, seeded via migration to 5 units each of Cherry Coke, LaCroix, Sprite.
 - **Frontend:** React + Vite (already scaffolded), single page (no `react-router-dom`), showing inventory, a "insert quarter" action, drink selection, and the transaction result (item vended / change returned / error).
-- **Testing:** Vitest + React Testing Library for client-side unit tests. Manual/`*.http`-file verification of the API contract against the spec table above.
+- **Testing:** Vitest + React Testing Library for client-side unit tests. xUnit for backend unit tests (starting with the `Beverage` entity / `VendingDbContext`). Manual/`*.http`-file verification of the API contract against the spec table above.
 
 ### Stack Decisions
 
@@ -43,6 +43,7 @@ From the assignment spec:
 - **No ASP.NET Identity / auth:** the spec has no concept of a user or account - it's a single anonymous machine. The already-installed `Microsoft.AspNetCore.Identity.EntityFrameworkCore` package won't be used; adding login would be unrequested scope a reviewer would have to puzzle over.
 - **Single-page client, no router:** the whole interaction is one continuous flow (view inventory -> insert coins -> pick a drink -> see result), so there's nothing to route between. `react-router-dom` stays installed but unused for v1.
 - **Vitest + RTL only, no E2E tooling:** matches what's already been learned; full browser E2E (Playwright/Cypress) is out of scope for a 3-day assessment.
+- **xUnit for backend unit tests:** decided partway through Step 2, after the API-only scope (manual `.http` verification, no backend tests) started to feel thin for a project already using EF Core migrations and seed data worth verifying automatically. xUnit is the .NET ecosystem default (`dotnet new` scaffolds it), so it stays consistent with the "use the standard tool" approach already applied to controllers and EF Core.
 
 ## Scope
 
@@ -50,6 +51,7 @@ From the assignment spec:
 
 - Controller-based Web API implementing all 6 endpoints exactly per the spec table (status codes, headers, body shapes).
 - SQLite database via EF Core: `Beverage` entity, migration seeding 3 drinks x 5 units, coin-count state.
+- xUnit backend unit tests, starting with the `Beverage` entity / `VendingDbContext` seed data.
 - README with step-by-step setup/run instructions verified on a clean clone (targeting OSX + noting any Windows differences).
 - React client: inventory view, insert-coin control, drink buttons, and a result area showing vended item / change / error messages.
 - A handful of Vitest + RTL unit tests on the client's coin/vend logic (e.g., running coin total, disabling a sold-out item, displaying returned change).
@@ -70,6 +72,7 @@ From the assignment spec:
 - All six vending constraints from the spec are honored (5-unit cap per drink, one item per transaction, unused coins refunded, etc.).
 - A reviewer can clone the repo and get both the API and (optionally) the client running on a clean machine using only the README.
 - Client-side Vitest tests pass.
+- Backend xUnit tests pass.
 - Delivered within the 3-day window.
 
 ## Learning Goals
