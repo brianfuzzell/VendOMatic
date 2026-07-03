@@ -7,7 +7,7 @@ Generated from: dev-docs/PRD.md
 
 ## Steps
 
-- [ ] **Step 1: Convert backend to controller-based routing**
+- [x] **Step 1: Convert backend to controller-based routing**
   Replace the default minimal-API template in `Program.cs` (the `MapGet("/weatherforecast", ...)` sample) with controller-based routing: `builder.Services.AddControllers()`, `app.MapControllers()`, and a `Controllers/` folder. This matches the Book 4 pattern the rest of the project builds on. Also confirm `.gitignore` excludes `bin/`, `obj/`, `node_modules/`, and any SQLite `.db` file.
 
   **Acceptance Criteria:**
