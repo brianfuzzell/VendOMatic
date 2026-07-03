@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-03 -->
-<!-- Last change: Marked Step 2 complete -->
+<!-- Last change: Marked Step 3 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -20,7 +20,7 @@ Generated from: dev-docs/PRD.md
   - **Given** a fresh clone with no existing database file, **When** migrations are applied, **Then** the SQLite database is created containing exactly 3 beverages, each with quantity 5.
   - **Given** the xUnit test project, **When** the seed-data test is run, **Then** it passes, confirming the `Beverage` entity and `DbContext` are wired up correctly.
 
-- [ ] **Step 3: Track held-coin state**
+- [x] **Step 3: Track held-coin state**
   Add a small singleton service (e.g. `CoinBank`) with methods to add a coin, read the current held count, and reset to 0. Register it as a singleton in DI. This state is intentionally kept in memory rather than in the database. It's transient machine state, not durable inventory. That keeps the coin logic simple and isolates persistence to the one thing that actually needs it (inventory).
 
   **Acceptance Criteria:**

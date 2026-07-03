@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Vend_O_Matic.Data;
+using Vend_O_Matic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<VendingDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("VendingDbContext")));
+builder.Services.AddSingleton<CoinBank>();
 
 var app = builder.Build();
 
