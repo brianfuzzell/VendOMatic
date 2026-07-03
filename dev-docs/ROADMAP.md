@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-03 -->
-<!-- Last change: Initial roadmap creation -->
+<!-- Last change: Marked Step 2 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -13,11 +13,12 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** the app is running, **When** a request hits a route defined by an `[ApiController]`, **Then** it responds successfully, confirming controllers are wired up correctly.
 
-- [ ] **Step 2: Model inventory with EF Core + SQLite**
-  Add a `Beverage` entity (`Id`, `Name`, `Quantity`), a `VendingDbContext`, and a SQLite connection string in `appsettings.json`. Register the context in DI. Create the initial migration and seed 3 beverages (Cherry Coke, LaCroix, Sprite) at quantity 5 each.
+- [x] **Step 2: Model inventory with EF Core + SQLite**
+  Add a `Beverage` entity (`Id`, `Name`, `Quantity`), a `VendingDbContext`, and a SQLite connection string in `appsettings.json`. Register the context in DI. Create the initial migration and seed 3 beverages (Cherry Coke, LaCroix, Sprite) at quantity 5 each. Set up an xUnit test project and write a backend unit test that verifies the seeded data (3 beverages, quantity 5 each) via the `DbContext`.
 
   **Acceptance Criteria:**
   - **Given** a fresh clone with no existing database file, **When** migrations are applied, **Then** the SQLite database is created containing exactly 3 beverages, each with quantity 5.
+  - **Given** the xUnit test project, **When** the seed-data test is run, **Then** it passes, confirming the `Beverage` entity and `DbContext` are wired up correctly.
 
 - [ ] **Step 3: Track held-coin state**
   Add a small singleton service (e.g. `CoinBank`) with methods to add a coin, read the current held count, and reset to 0. Register it as a singleton in DI. This state is intentionally kept in memory rather than in the database. It's transient machine state, not durable inventory. That keeps the coin logic simple and isolates persistence to the one thing that actually needs it (inventory).
