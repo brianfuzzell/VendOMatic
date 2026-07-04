@@ -1,5 +1,5 @@
-<!-- Last updated: 2026-07-03 -->
-<!-- Last change: Marked Step 3 complete -->
+<!-- Last updated: 2026-07-04 -->
+<!-- Last change: Marked Step 4 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -26,7 +26,7 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** the service starts at 0 coins, **When** a coin is added, **Then** the held count is 1, and **When** the service is reset, **Then** the held count returns to 0.
 
-- [ ] **Step 4: Coin endpoints (`PUT /`, `DELETE /`)**
+- [x] **Step 4: Coin endpoints (`PUT /`, `DELETE /`)**
   Implement `PUT /` accepting `{ "coin": 1 }`, incrementing the `CoinBank`, returning `204` with an `X-Coins` header for the running total. Implement `DELETE /` resetting the `CoinBank` to 0 and returning `204` with `X-Coins` set to however many coins were just returned.
 
   **Acceptance Criteria:**
