@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-04 -->
-<!-- Last change: Marked Step 6 complete -->
+<!-- Last change: Marked Step 7 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -48,7 +48,7 @@ Generated from: dev-docs/PRD.md
   - **Given** a beverage in stock and fewer than 2 coins held, **When** `PUT /inventory/:id` is called, **Then** it responds `403` with `X-Coins` equal to the coins currently held (`0` or `1`), and the held coins are **not** cleared.
   - **Given** a beverage in stock and 2 or more coins held, **When** `PUT /inventory/:id` is called, **Then** it responds `200` with `X-Inventory-Remaining` decremented by 1, `X-Coins` equal to the change owed (held coins minus 2), a body of `{ "quantity": 1 }`, and the held coins reset to 0.
 
-- [ ] **Step 7: Manual API verification against the spec**
+- [x] **Step 7: Manual API verification against the spec**
   Expand `Vend-O-Matic.http` to cover every documented case: inserting coins, deleting/returning coins, both `GET /inventory` variants, and all three `PUT /inventory/:id` outcomes. Run each request and confirm the exact status code, headers, and body against the PRD's Core Requirements section.
 
   **Acceptance Criteria:**
@@ -76,7 +76,7 @@ Generated from: dev-docs/PRD.md
   - **Given** the test suite, **When** run via `vitest run`, **Then** all client unit tests pass.
 
 - [ ] **Step 11: README and setup instructions**
-  Write step-by-step setup/run instructions (`dotnet restore`, applying EF Core migrations, `dotnet run`, `npm install`, `npm run dev`), verified against a clean clone.
+  Write step-by-step setup/run instructions (`dotnet restore`, applying EF Core migrations, `dotnet run`, `npm install`, `npm run dev`), verified against a clean clone. Also document how to use `Vend-O-Matic.http` for manual API verification (e.g. installing the VS Code REST Client extension, or the JetBrains built-in equivalent), since a reviewer may not already have that tool.
 
   **Acceptance Criteria:**
   - **Given** a clean clone and only the README for guidance, **When** the documented steps are followed in order, **Then** both the API and the client start successfully.
