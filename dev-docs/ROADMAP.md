@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-04 -->
-<!-- Last change: Marked Step 7 complete -->
+<!-- Last change: Marked Step 8 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -54,7 +54,7 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** the running API, **When** each request in `Vend-O-Matic.http` is executed in order, **Then** every response matches the status code, headers, and body documented in the spec.
 
-- [ ] **Step 8: React client - inventory display and coin insert**
+- [x] **Step 8: React client - inventory display and coin insert**
   Wire up fetch calls to the API. Display the 3 beverages with their current quantities from `GET /inventory`. Add an "insert quarter" control that calls `PUT /` and shows the running coin total from the `X-Coins` header.
 
   **Acceptance Criteria:**
