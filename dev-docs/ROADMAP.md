@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-04 -->
-<!-- Last change: Marked Step 5 complete -->
+<!-- Last change: Marked Step 6 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -40,7 +40,7 @@ Generated from: dev-docs/PRD.md
   - **Given** the 3 seeded beverages, **When** `GET /inventory` is called, **Then** it returns `200` with an array of 3 integers matching their current quantities.
   - **Given** a valid beverage id, **When** `GET /inventory/:id` is called, **Then** it returns `200` with that beverage's quantity as an integer.
 
-- [ ] **Step 6: Purchase endpoint core logic (`PUT /inventory/:id`)**
+- [x] **Step 6: Purchase endpoint core logic (`PUT /inventory/:id`)**
   This is the heart of the assessment. Implement the three-way branch exactly per the spec table: out of stock, insufficient coins, and success.
 
   **Acceptance Criteria:**
