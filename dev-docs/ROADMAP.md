@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-04 -->
-<!-- Last change: Marked Step 4 complete -->
+<!-- Last change: Marked Step 5 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -33,7 +33,7 @@ Generated from: dev-docs/PRD.md
   - **Given** the machine holds 0 coins, **When** `PUT /` is called with `{ "coin": 1 }`, **Then** it responds `204` with `X-Coins: 1`.
   - **Given** the machine holds 2 coins, **When** `DELETE /` is called, **Then** it responds `204` with `X-Coins: 2`, and the held count is 0 afterward.
 
-- [ ] **Step 5: Inventory read endpoints (`GET /inventory`, `GET /inventory/:id`)**
+- [x] **Step 5: Inventory read endpoints (`GET /inventory`, `GET /inventory/:id`)**
   Implement `GET /inventory` returning a `200` with an array of remaining quantities (in a consistent, stable order). Implement `GET /inventory/:id` returning a `200` with that single beverage's remaining quantity.
 
   **Acceptance Criteria:**
