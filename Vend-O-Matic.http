@@ -1,6 +1,54 @@
 @Vend_O_Matic_HostAddress = http://localhost:5173
 
-GET {{Vend_O_Matic_HostAddress}}/weatherforecast/
-Accept: application/json
+### Insert a coin (quarter). Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
 
-###
+{
+  "coin": 1
+}
+
+### Return all held coins. Expect 204, X-Coins matching however many coins were held
+DELETE {{Vend_O_Matic_HostAddress}}/
+
+### Get all inventory quantities. Expect 200, array of 3 ints
+GET {{Vend_O_Matic_HostAddress}}/inventory
+
+### Get a single beverage's quantity (id 1 = Cherry Coke). Expect 200, an int
+GET {{Vend_O_Matic_HostAddress}}/inventory/1
+
+### Insert 1 coin, ahead of the insufficient-funds test below. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Attempt to purchase LaCroix (id 2) with only 1 coin held.
+### Expect 403, X-Coins: 1, and the coin is NOT reset (still held for the next request)
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
+### Insert a second coin, now 2 held total. Expect 204, X-Coins: 2
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase LaCroix (id 2) again, now with 2 coins held.
+### Expect 200, X-Coins: 0, X-Inventory-Remaining: 4, body { "quantity": 1 }
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
+### Insert 1 coin, ahead of the out-of-stock test below. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Attempt to purchase Cherry Coke (id 1), which is already at quantity 0.
+### Expect 404, X-Coins: 1 (the full refund of the coin just inserted), and coins reset to 0
+PUT {{Vend_O_Matic_HostAddress}}/inventory/1
