@@ -1,5 +1,5 @@
-<!-- Last updated: 2026-07-04 -->
-<!-- Last change: Resolved unanswered questions on Program.cs cleanup and Step 6 controller structure -->
+<!-- Last updated: 2026-07-05 -->
+<!-- Last change: Reflected Step 12 cleanup (WeatherForecast removal) and the 403/404 ProblemDetails resolution -->
 
 # Vend-O-Matic - Technical Architecture
 
@@ -30,7 +30,7 @@ graph LR
 
 ## Codebase Map
 
-- **`Program.cs`** - app entry point and composition root. Registers controllers, the EF Core `DbContext` (SQLite), and `CoinBank` as a singleton. Still carries the leftover `WeatherForecast` record from the default template (harmless, unused, worth deleting during Step 12 cleanup).
+- **`Program.cs`** - app entry point and composition root. Registers controllers, the EF Core `DbContext` (SQLite), and `CoinBank` as a singleton. The leftover `WeatherForecast` record from the default template was removed during Step 12 cleanup.
 - **`Controllers/`**
   - `CoinController.cs` - `PUT /` and `DELETE /`, the two coin-handling endpoints. Talks only to `CoinBank`.
   - `InventoryController.cs` - `GET /inventory`, `GET /inventory/:id`. Talks only to `VendingDbContext`. This is where Step 6's `PUT /inventory/:id` purchase logic will live, and it'll need to start talking to `CoinBank` too.
@@ -120,7 +120,9 @@ Follows the developer's global philosophy (understand what you build, ask before
 
 ### Error Handling
 
-- Not-found cases return ASP.NET Core's standard `NotFound()` / status codes, no custom error body shape defined yet. Step 6 will need to decide the exact body (if any) for the 403/404 purchase cases per the PRD table (headers carry the meaningful data; bodies are minimal/absent except on success).
+- The 403/404 purchase responses (`InventoryController.PurchaseBeverage`) set `Response.StatusCode` directly and return `EmptyResult()`, rather than the `NotFound()` / `StatusCode()` convenience methods. `[ApiController]`'s automatic client-error handling wraps those convenience results in a `ProblemDetails` JSON body, which contradicts the PRD's spec table (empty body, headers carry the meaningful data). `EmptyResult()` isn't intercepted by that behavior, so the response body stays truly empty. This was a per-action fix (Step 12), chosen over the global `ApiBehaviorOptions.SuppressMapClientErrorsToProblemDetailsResults` switch to keep the change scoped to the two documented rows rather than affecting every bare status-code result in the app.
+- `PUT /` validates that `request.Coin == 1`, rejecting anything else with a `400` (default `ProblemDetails` body, since this case isn't in the PRD's spec table and there's no documented contract to match).
+- Other not-found cases (e.g. `GetInventoryItem` with an invalid id) still return ASP.NET Core's standard `NotFound()`, including its default `ProblemDetails` body, since that case isn't part of the documented spec table.
 
 ### Commits & PRs
 
@@ -128,4 +130,4 @@ Follows the developer's global philosophy (understand what you build, ask before
 
 ## Unanswered Questions
 
-None currently open. (Resolved: `Program.cs` template cleanup deferred to Step 12; `InventoryController`'s Step 6 purchase logic stays inline per Code Style above.)
+None currently open. (Resolved: `Program.cs` template cleanup completed in Step 12; `InventoryController`'s Step 6 purchase logic stays inline per Code Style above; the 403/404 `ProblemDetails` body question was resolved in Step 12 via a per-action `EmptyResult()` fix, see Error Handling above.)

@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-05 -->
-<!-- Last change: Marked Step 11 complete -->
+<!-- Last change: Marked Step 12 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -81,10 +81,12 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** a clean clone and only the README for guidance, **When** the documented steps are followed in order, **Then** both the API and the client start successfully.
 
-- [ ] **Step 12: Final pass against the vending constraints**
+- [x] **Step 12: Final pass against the vending constraints**
   Re-check the implementation against all 6 vending constraints in the original assignment (quarters only, 2-quarter price, 5-unit cap per beverage, single item per transaction, unused coins returned, `application/json` throughout). Fix any gaps found.
 
   Also decide what to do about the 403/404 purchase responses: `[ApiController]`'s automatic client-error handling adds a `ProblemDetails` JSON body to both, even though the assignment's spec table shows an empty body for these rows (found during Step 11's end-to-end `.http` verification). Either suppress it (`ApiBehaviorOptions.SuppressMapClientErrorsToProblemDetailsResults = true` in `Program.cs`) or confirm it's harmless against the reviewer's test suite.
+
+  **Resolution:** Chose a per-action fix over the global `ApiBehaviorOptions` suppression: the 403/404 branches in `PurchaseBeverage` now set `Response.StatusCode` directly and return `EmptyResult()`, bypassing the automatic `ProblemDetails` wrapping without a project-wide config change (verified empty bodies via manual `.http`/curl testing). Also found and closed a gap in "quarters only": `PUT /` was ignoring the request body's `coin` value entirely; it now rejects anything other than `{"coin": 1}` with a `400`. The `WeatherForecast` template leftover in `Program.cs` was removed. The remaining 4 constraints (2-quarter price, 5-unit cap, single item per transaction, unused coins returned, `application/json` throughout) were verified directly against the running app with no gaps found.
 
   **Acceptance Criteria:**
   - **Given** the finished project, **When** each of the 6 vending constraints is checked against the running implementation, **Then** all 6 are satisfied.
