@@ -58,13 +58,15 @@ public class InventoryController : ControllerBase
         {
             _coinBank.Reset();
             Response.Headers.Append("X-Coins", heldCoins.ToString());
-            return NotFound();
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return new EmptyResult();
         }
 
         if (heldCoins < 2)
         {
             Response.Headers.Append("X-Coins", heldCoins.ToString());
-            return StatusCode(StatusCodes.Status403Forbidden);
+            Response.StatusCode = StatusCodes.Status403Forbidden;
+            return new EmptyResult();
         }
 
         beverage.Quantity -= 1;

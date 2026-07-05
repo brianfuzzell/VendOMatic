@@ -18,6 +18,11 @@ public class CoinController : ControllerBase
     [HttpPut]
     public IActionResult InsertCoin(CoinRequestDTO request)
     {
+        if (request.Coin != 1)
+        {
+            return BadRequest();
+        }
+
         _coinBank.AddCoin();
         Response.Headers.Append("X-Coins", _coinBank.GetHeldCount().ToString());
         return NoContent();

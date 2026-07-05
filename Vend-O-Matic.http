@@ -8,6 +8,14 @@ Content-Type: application/json
   "coin": 1
 }
 
+### Reject a non-quarter/multi-coin value. Expect 400, held count unchanged.
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 5
+}
+
 ### Return all held coins. Expect 204, X-Coins matching however many coins were held
 DELETE {{Vend_O_Matic_HostAddress}}/
 
