@@ -1,4 +1,4 @@
-@Vend_O_Matic_HostAddress = http://localhost:5173
+@Vend_O_Matic_HostAddress = https://localhost:5001
 
 ### Insert a coin (quarter). Expect 204, X-Coins: 1
 PUT {{Vend_O_Matic_HostAddress}}/
