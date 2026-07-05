@@ -14,6 +14,7 @@ return {
         target: "https://localhost:5001",
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
         },
     },
     },
@@ -23,7 +24,8 @@ return {
     plugins: [react()],
     test: {
         globals: true,
-        environment: 'jsdom'
+        environment: 'jsdom',
+        setupFiles: './src/setupTests.js'
     }
 };
 });

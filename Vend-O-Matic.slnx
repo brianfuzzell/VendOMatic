@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Vend-O-Matic.csproj" />
+  <Project Path="Vend-O-Matic.Tests/Vend-O-Matic.Tests.csproj" />
+</Solution>
