@@ -79,6 +79,8 @@ Run these from the repository root.
 
 ## Frontend Setup
 
+![Vend-O-Matic React client demo](dev-docs/assets/VendomaticDemoClient.gif)
+
 Run these from the `client/` directory, in a second terminal, while the API from the previous section is still running.
 
 1. Install dependencies:
@@ -104,6 +106,8 @@ Run these from the `client/` directory, in a second terminal, while the API from
    The trailing `run` is required. Without it, Vitest starts in interactive watch mode and won't exit on its own.
 
 ## Manual API Verification
+
+![Vend-O-Matic manual API verification demo](dev-docs/assets/VendomaticDemoPostman.gif)
 
 `Vend-O-Matic.http` exercises every documented request/response case directly against the API (coin insert/return, both inventory reads, and all three purchase outcomes), independent of the React client.
 
