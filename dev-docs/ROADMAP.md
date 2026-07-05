@@ -1,5 +1,5 @@
-<!-- Last updated: 2026-07-04 -->
-<!-- Last change: Marked Step 8 complete -->
+<!-- Last updated: 2026-07-05 -->
+<!-- Last change: Marked Step 9 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -61,7 +61,7 @@ Generated from: dev-docs/PRD.md
   - **Given** the client loads, **When** the page renders, **Then** it displays all 3 beverages with quantities fetched from `GET /inventory`.
   - **Given** a user clicks "insert quarter", **When** the request completes, **Then** the displayed coin total increases by 1.
 
-- [ ] **Step 9: React client - purchase flow and result display**
+- [x] **Step 9: React client - purchase flow and result display**
   Add drink-selection controls that call `PUT /inventory/:id`. Display the outcome (item vended + change returned, out of stock, or insufficient funds). Disable the control for any beverage at quantity 0.
 
   **Acceptance Criteria:**
