@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 
-function mockFetchResponses({ inventory = [5, 5, 5], insertedCoins = "1" } = {}) {
+function mockFetchResponses({ inventory = [5, 5, 5], insertedCoins = "1", purchase } = {}) {
   globalThis.fetch = vi.fn((url, options) => {
     if (url === "/api/inventory") {
       return Promise.resolve({
@@ -13,6 +13,15 @@ function mockFetchResponses({ inventory = [5, 5, 5], insertedCoins = "1" } = {})
     if (url === "/api/" && options?.method === "PUT") {
       return Promise.resolve({
         headers: { get: () => insertedCoins },
+      });
+    }
+
+    if (url.startsWith("/api/inventory/") && options?.method === "PUT") {
+      return Promise.resolve({
+        status: purchase.status,
+        headers: {
+          get: (header) => (header === "X-Coins" ? purchase.coins : purchase.remaining),
+        },
       });
     }
 
@@ -55,5 +64,50 @@ describe("sold-out beverage disabled state", () => {
 
     expect(within(soldOutItem).getByRole("button", { name: "Select" })).toBeDisabled();
     expect(within(inStockItem).getByRole("button", { name: "Select" })).not.toBeDisabled();
+  });
+});
+
+describe("purchase result rendering", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  test("shows the vended item and change on a successful purchase", async () => {
+    mockFetchResponses({ purchase: { status: 200, coins: "0", remaining: "4" } });
+    const user = userEvent.setup();
+
+    render(<App />);
+    const cherryCokeItem = await screen.findByText("Cherry Coke: 5 remaining");
+    await user.click(within(cherryCokeItem).getByRole("button", { name: "Select" }));
+
+    expect(await screen.findByText("Vended Cherry Coke. Change returned: 0.")).toBeInTheDocument();
+    expect(screen.getByText("Cherry Coke: 4 remaining")).toBeInTheDocument();
+  });
+
+  test("shows an insufficient-funds message and does not vend", async () => {
+    mockFetchResponses({ purchase: { status: 403, coins: "1" } });
+    const user = userEvent.setup();
+
+    render(<App />);
+    const cherryCokeItem = await screen.findByText("Cherry Coke: 5 remaining");
+    await user.click(within(cherryCokeItem).getByRole("button", { name: "Select" }));
+
+    expect(
+      await screen.findByText("Insufficient funds for Cherry Coke. Insert more coins."),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Cherry Coke: 5 remaining")).toBeInTheDocument();
+  });
+
+  test("shows an out-of-stock message when the server rejects a stale in-stock click", async () => {
+    mockFetchResponses({ purchase: { status: 404, coins: "2" } });
+    const user = userEvent.setup();
+
+    render(<App />);
+    const cherryCokeItem = await screen.findByText("Cherry Coke: 5 remaining");
+    await user.click(within(cherryCokeItem).getByRole("button", { name: "Select" }));
+
+    expect(
+      await screen.findByText("Cherry Coke is out of stock. Coins returned: 2."),
+    ).toBeInTheDocument();
   });
 });
