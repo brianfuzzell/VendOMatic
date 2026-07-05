@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-05 -->
-<!-- Last change: Marked Step 10 complete -->
+<!-- Last change: Marked Step 11 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -75,7 +75,7 @@ Generated from: dev-docs/PRD.md
   **Acceptance Criteria:**
   - **Given** the test suite, **When** run via `vitest run`, **Then** all client unit tests pass.
 
-- [ ] **Step 11: README and setup instructions**
+- [x] **Step 11: README and setup instructions**
   Write step-by-step setup/run instructions (`dotnet restore`, applying EF Core migrations, `dotnet run`, `npm install`, `npm run dev`), verified against a clean clone. Also document how to use `Vend-O-Matic.http` for manual API verification (e.g. installing the VS Code REST Client extension, or the JetBrains built-in equivalent), since a reviewer may not already have that tool.
 
   **Acceptance Criteria:**
@@ -83,6 +83,8 @@ Generated from: dev-docs/PRD.md
 
 - [ ] **Step 12: Final pass against the vending constraints**
   Re-check the implementation against all 6 vending constraints in the original assignment (quarters only, 2-quarter price, 5-unit cap per beverage, single item per transaction, unused coins returned, `application/json` throughout). Fix any gaps found.
+
+  Also decide what to do about the 403/404 purchase responses: `[ApiController]`'s automatic client-error handling adds a `ProblemDetails` JSON body to both, even though the assignment's spec table shows an empty body for these rows (found during Step 11's end-to-end `.http` verification). Either suppress it (`ApiBehaviorOptions.SuppressMapClientErrorsToProblemDetailsResults = true` in `Program.cs`) or confirm it's harmless against the reviewer's test suite.
 
   **Acceptance Criteria:**
   - **Given** the finished project, **When** each of the 6 vending constraints is checked against the running implementation, **Then** all 6 are satisfied.

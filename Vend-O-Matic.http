@@ -1,4 +1,4 @@
-@Vend_O_Matic_HostAddress = http://localhost:5173
+@Vend_O_Matic_HostAddress = https://localhost:5001
 
 ### Insert a coin (quarter). Expect 204, X-Coins: 1
 PUT {{Vend_O_Matic_HostAddress}}/
@@ -41,6 +41,85 @@ Content-Type: application/json
 ### Expect 200, X-Coins: 0, X-Inventory-Remaining: 4, body { "quantity": 1 }
 PUT {{Vend_O_Matic_HostAddress}}/inventory/2
 
+### LaCroix (id 2) is now at quantity 4. Buy it down to 0 with 4 more purchases,
+### so the out-of-stock test below is genuine rather than assuming leftover state.
+
+### Purchase #2 of 4: insert coin 1 of 2. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #2 of 4: insert coin 2 of 2. Expect 204, X-Coins: 2
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #2 of 4: buy LaCroix. Expect 200, X-Inventory-Remaining: 3
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
+### Purchase #3 of 4: insert coin 1 of 2. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #3 of 4: insert coin 2 of 2. Expect 204, X-Coins: 2
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #3 of 4: buy LaCroix. Expect 200, X-Inventory-Remaining: 2
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
+### Purchase #4 of 4: insert coin 1 of 2. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #4 of 4: insert coin 2 of 2. Expect 204, X-Coins: 2
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #4 of 4: buy LaCroix. Expect 200, X-Inventory-Remaining: 1
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
+### Purchase #5 of 4: insert coin 1 of 2. Expect 204, X-Coins: 1
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #5 of 4: insert coin 2 of 2. Expect 204, X-Coins: 2
+PUT {{Vend_O_Matic_HostAddress}}/
+Content-Type: application/json
+
+{
+  "coin": 1
+}
+
+### Purchase #5 of 4: buy LaCroix. Expect 200, X-Inventory-Remaining: 0
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
+
 ### Insert 1 coin, ahead of the out-of-stock test below. Expect 204, X-Coins: 1
 PUT {{Vend_O_Matic_HostAddress}}/
 Content-Type: application/json
@@ -49,6 +128,6 @@ Content-Type: application/json
   "coin": 1
 }
 
-### Attempt to purchase Cherry Coke (id 1), which is already at quantity 0.
+### Attempt to purchase LaCroix (id 2), now genuinely at quantity 0.
 ### Expect 404, X-Coins: 1 (the full refund of the coin just inserted), and coins reset to 0
-PUT {{Vend_O_Matic_HostAddress}}/inventory/1
+PUT {{Vend_O_Matic_HostAddress}}/inventory/2
