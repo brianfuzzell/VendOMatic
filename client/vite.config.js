@@ -24,7 +24,8 @@ return {
     plugins: [react()],
     test: {
         globals: true,
-        environment: 'jsdom'
+        environment: 'jsdom',
+        setupFiles: './src/setupTests.js'
     }
 };
 });
