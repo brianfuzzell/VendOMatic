@@ -1,5 +1,5 @@
 <!-- Last updated: 2026-07-05 -->
-<!-- Last change: Marked Step 9 complete -->
+<!-- Last change: Marked Step 10 complete -->
 
 # Vend-O-Matic - Implementation Roadmap
 
@@ -69,7 +69,7 @@ Generated from: dev-docs/PRD.md
   - **Given** a beverage's quantity is 0, **When** inventory is displayed, **Then** that beverage's selection control is disabled.
   - **Given** fewer than 2 coins inserted, **When** the user attempts to select a drink, **Then** the UI shows an insufficient-funds message and nothing is vended.
 
-- [ ] **Step 10: Client unit tests with Vitest + React Testing Library**
+- [x] **Step 10: Client unit tests with Vitest + React Testing Library**
   Write unit tests covering the coin-total display, the disabled state for sold-out items, and the rendering of vend/change/error results.
 
   **Acceptance Criteria:**
