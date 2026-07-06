@@ -79,6 +79,7 @@ Run these from the repository root.
 
 ## Frontend Setup
 
+User demo in browser:
 ![Vend-O-Matic React client demo](dev-docs/assets/VendomaticDemoClient.gif)
 
 Run these from the `client/` directory, in a second terminal, while the API from the previous section is still running.
@@ -107,6 +108,7 @@ Run these from the `client/` directory, in a second terminal, while the API from
 
 ## Manual API Verification
 
+User demo in Postman:
 ![Vend-O-Matic manual API verification demo](dev-docs/assets/VendomaticDemoPostman.gif)
 
 `Vend-O-Matic.http` exercises every documented request/response case directly against the API (coin insert/return, both inventory reads, and all three purchase outcomes), independent of the React client.
